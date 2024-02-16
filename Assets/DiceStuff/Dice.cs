@@ -11,6 +11,8 @@ public class Dice : MonoBehaviour
     [SerializeField] TextMeshProUGUI _textBox;
     Rigidbody _rb;
 
+    [SerializeField] int rollValue = -1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,15 +23,18 @@ public class Dice : MonoBehaviour
 
     public void RollTheDice()
     {
-        _rb.AddForce(Vector3.up * _throwStregth, ForceMode.Impulse);
+        if (_rb.angularVelocity.sqrMagnitude < 0.1)
+        {
+            _rb.AddForce(Vector3.up * _throwStregth, ForceMode.Impulse);
 
-        _rb.AddTorque(transform.forward * Random.Range(_torqueMinimum, _torqueMaximum)
-            + transform.up * Random.Range(_torqueMinimum, _torqueMaximum)
-            + transform.right * Random.Range(_torqueMinimum, _torqueMaximum));
+            _rb.AddTorque(transform.forward * Random.Range(_torqueMinimum, _torqueMaximum)
+                + transform.up * Random.Range(_torqueMinimum, _torqueMaximum)
+                + transform.right * Random.Range(_torqueMinimum, _torqueMaximum));
 
-        _textBox.text = "";
+            _textBox.text = "";
 
-        StartCoroutine(WaitForStop());
+            StartCoroutine(WaitForStop());
+        }
     }
 
     IEnumerator WaitForStop()
@@ -52,7 +57,7 @@ public class Dice : MonoBehaviour
          */
 
         float yDot, xDot, zDot;
-        int rollValue = -1;
+        // int rollValue = -1;
 
         yDot = Mathf.Round(Vector3.Dot(transform.up.normalized, Vector3.up));
         xDot = Mathf.Round(Vector3.Dot(transform.forward.normalized, Vector3.up));
