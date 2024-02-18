@@ -7,25 +7,24 @@ public class Dice : MonoBehaviour
 {
     [SerializeField] float _torqueMinimum = .1f;
     [SerializeField] float _torqueMaximum = 2;
-    [SerializeField] float _throwStregth = 10;
+    [SerializeField] float _throwStrengthMinimum = 8;
+    [SerializeField] float _throwStrengthMaximum = 12;
     [SerializeField] TextMeshProUGUI _textBox;
     Rigidbody _rb;
 
-    [SerializeField] int rollValue = -1;
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
 
-
     }
-
+        
     public void RollTheDice()
     {
-        if (_rb.angularVelocity.sqrMagnitude < 0.1)
+        if (_rb.angularVelocity.sqrMagnitude < 1)
         {
-            _rb.AddForce(Vector3.up * _throwStregth, ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * Random.Range(_throwStrengthMinimum, _throwStrengthMaximum), ForceMode.Impulse);
 
             _rb.AddTorque(transform.forward * Random.Range(_torqueMinimum, _torqueMaximum)
                 + transform.up * Random.Range(_torqueMinimum, _torqueMaximum)
@@ -41,7 +40,7 @@ public class Dice : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
 
-        while (_rb.angularVelocity.sqrMagnitude > 0.1)
+        while (_rb.angularVelocity.sqrMagnitude > 1)
         {
             yield return null;
         }
@@ -57,7 +56,7 @@ public class Dice : MonoBehaviour
          */
 
         float yDot, xDot, zDot;
-        // int rollValue = -1;
+        int rollValue = -1;
 
         yDot = Mathf.Round(Vector3.Dot(transform.up.normalized, Vector3.up));
         xDot = Mathf.Round(Vector3.Dot(transform.forward.normalized, Vector3.up));
