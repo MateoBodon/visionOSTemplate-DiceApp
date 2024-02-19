@@ -30,6 +30,7 @@ namespace PolySpatial.Samples
             m_MeshRenderer.material = isSelected ? m_SelectedMat : m_DefaultMat;
             m_RigidBody.isKinematic = isSelected;
 
+
             // Check for and call ISelectable methods
             var selectable = GetComponent<ISelectable>();
             if (selectable != null)

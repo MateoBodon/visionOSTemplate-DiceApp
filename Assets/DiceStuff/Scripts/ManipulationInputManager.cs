@@ -87,7 +87,7 @@ namespace PolySpatial.Samples
                             var deviceRotation = spatialPointerState.inputDeviceRotation;
                             var rotation = deviceRotation * selection.RotationOffset;
                             var position = spatialPointerState.interactionPosition + deviceRotation * selection.PositionOffset;
-                            selection.Piece.transform.position = position;
+                            selection.Piece.transform.position = position; //changed to only be position to allow the dice to rotate, will have to clean the rest of the code later *********************************************************************************************
 
 
                         }
